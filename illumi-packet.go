@@ -214,7 +214,7 @@ func (wsInstance *illumiPacket) setLeds(led []uint32) {
 	}
 }
 
-//ws2811.Clear()がないのでリセット用の関数を作成
+//ws2811.Clear()がないのでリセット用の関数
 func (wsInstance *illumiPacket) resetLeds(led []uint32) {
 
     //led配列を全部消してそれをセット、renderまでおこなう
@@ -228,9 +228,9 @@ func (wsInstance *illumiPacket) resetLeds(led []uint32) {
 	}
 }
 
-func castPacket(led []uint32, k int, color uint32,reverse bool) {
+func (wsInstance *illumiPacket) castPacket(led []uint32, k int, color uint32,reverse bool) {
     for i := -(k-1); i < len(led)+series+speed; i += speed {
-        initLeds(led)
+        wsInstance.initLeds(led)
 
         for j := 0; j < k; j++ {
             if t := i + j; 0 <= t && t < len(led) {
@@ -243,13 +243,13 @@ func castPacket(led []uint32, k int, color uint32,reverse bool) {
         }
 
         if reverse {
-            reverseLeds(led)
+            wsInstance.reverseLeds(led)
         }
 
-        setLeds(led)
-        err := ws2811.Render()
+        wsInstance.setLeds(led)
+        err := wsInstance.ws.Render()
         if err != nil {
-            ws2811.Clear()
+            wsInstance.resetLeds(led)
             fmt.Println("Error during wipe " + err.Error())
             os.Exit(-1)
         }
@@ -317,7 +317,7 @@ func showIPAddress(led []uint32, ipaddr string) {
 	ip := net.ParseIP(ipaddr)
 	ipv4 := ip.To4()
 
-    initLeds(led)
+    wsInstance.initLeds(led)
 	for i := 0; i < ipv4Len; i++ {
 
 		// number
@@ -331,21 +331,10 @@ func showIPAddress(led []uint32, ipaddr string) {
 		// period
 		led[(i+1) * 9 - 1] = colors[1]
 	}
-    setLeds(led)
-    err := ws2811.Render()
+    wsInstance.setLeds(led)
+    err := wsInstance.ws.Render()
     if err != nil {
-        ws2811.Clear()
-        fmt.Println("Error during wipe " + err.Error())
-        os.Exit(-1)
-    }
-}
-
-func resetLeds(led []uint32) {
-    initLeds(led)
-    setLeds(led)
-    err := ws2811.Render()
-    if err != nil {
-        ws2811.Clear()
+        wsInstance.resetLeds(led)
         fmt.Println("Error during wipe " + err.Error())
         os.Exit(-1)
     }
