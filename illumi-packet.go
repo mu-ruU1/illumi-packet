@@ -9,7 +9,10 @@ import (
     "os"
     "net"
     "errors"
-    "github.com/jgarff/rpi_ws281x/golang/ws2811"
+
+    ws2811 "github.com/rpi-ws281x/rpi-ws281x-go"
+    //"github.com/jgarff/rpi_ws281x/golang/ws2811"
+
     "github.com/google/gopacket"
     "github.com/google/gopacket/pcap"
     "github.com/google/gopacket/layers"
@@ -18,6 +21,18 @@ import (
 type layerMeta struct{
     color uint32
     show bool
+}
+
+type wsEngine interface {
+	Init() error
+	Render() error
+	Wait() error
+	Fini()
+	Leds(channel int) []uint32
+}
+
+type illumiPacket struct {
+	ws wsEngine
 }
 
 const (
@@ -166,16 +181,51 @@ func main() {
     }
 }
 
-func reverseLeds(led []uint32) {
+//エラーがあるかを判定して、あればエラーを出力する関数
+func checkError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
+//ws2811のインスタンスに対して初期化を実行
+func (wsInstance *illumiPacket) setup() error {
+	return wsInstance.ws.Init()
+}
+
+//wsInstanceに対するレシーバーを追加
+func (wsInstance *illumiPacket) reverseLeds(led []uint32) {
     for i, j := 0, len(led)-1; i < j; i, j = i+1, j-1 {
         led[i], led[j] = led[j], led[i]
     }
 }
 
-func initLeds(led []uint32) {
+//wsInstanceに対するレシーバーを追加
+func (wsInstance *illumiPacket) initLeds(led []uint32) {
     for i, _ := range led {
         led[i] = 0
     }
+}
+
+//wsInstanceの各LEDを指定した色に変更する
+func (wsInstance *illumiPacket) setLeds(led []uint32) {
+	for i := 0; i < count; i++ {
+		wsInstance.ws.Leds(0)[i] = led[i]
+	}
+}
+
+//ws2811.Clear()がないのでリセット用の関数を作成
+func (wsInstance *illumiPacket) resetLeds(led []uint32) {
+
+    //led配列を全部消してそれをセット、renderまでおこなう
+	wsInstance.initLeds(led)
+	wsInstance.setLEDs(led)
+
+	err := wsInstance.ws.Render()
+	if err != nil {
+		fmt.Println("Error during reset" + err.Error())
+		os.Exit(-1)
+	}
 }
 
 func castPacket(led []uint32, k int, color uint32,reverse bool) {
@@ -206,11 +256,6 @@ func castPacket(led []uint32, k int, color uint32,reverse bool) {
     }
 }
 
-func setLeds(led []uint32) {
-	for i := 0; i < count; i++ {
-		ws2811.SetLed(i, led[i])
-	}
-}
 
 func isAnomaly(packet gopacket.Packet) bool {
     anml := false
