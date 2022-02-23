@@ -1,8 +1,10 @@
 module illumi-packet
 
-go 1.13
+go 1.17
 
 require (
-	github.com/google/gopacket v1.1.17
-	github.com/jgarff/rpi_ws281x v0.0.0-20191106145129-6b01e53c3f8b
+	github.com/google/gopacket v1.1.19
+	github.com/rpi-ws281x/rpi-ws281x-go v1.0.8
 )
+
+require github.com/pkg/errors v0.9.1 // indirect
