@@ -1,7 +1,7 @@
 # イルミパケット
 
 ---
-以前のコードで用いられていた[ライブラリ](github.com/jgarff/rpi_ws281x/golang/ws2811) がdeprecatedとなってしまったので、[新しいライブラリ](github.com/rpi-ws281x/rpi-ws281x-go)を用いるようにしています。
+以前のコードで用いられていた[ライブラリ](https://github.com/jgarff/rpi_ws281x/golang/ws2811) がdeprecatedとなってしまったので、[新しいライブラリ](https://github.com/rpi-ws281x/rpi-ws281x-go)を用いるようにしています。
 
 また、readmeにおいても、一部を2022年の新しい情報にアップデートし、その箇所を(追記)で表記しています。
 
