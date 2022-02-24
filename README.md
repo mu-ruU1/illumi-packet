@@ -2,7 +2,9 @@
 
 ---
 
-以下において、一部を2022年の新しい情報にアップデートしました。 => (追記)で表記
+以下において、一部を2022年の新しい情報にアップデートしました。
+
+ => (追記)で表記
 
 ---
 
@@ -74,7 +76,9 @@ go version go1.13.4 linux/arm
 
 (追記)
 
-更新したライブラリで現在利用しているgoのバージョンは go version go1.17.6 linux/arm です
+更新したライブラリで現在利用しているgoのバージョンは go version go1.17.6 linux/arm です。
+
+(追記ここまで)
 
 --- 
 #### libpcapのインストール
@@ -108,7 +112,7 @@ $ sudo cp -ai ./libws2811.a /usr/local/lib/
 ---
 (追記)
 
-ビルドがうまくいかず、何度も行う場合は`-ai`のオプションを`-a`にしておくと上書きしてくれます。
+ビルドがうまくいかず、何度も行う場合は`-ai`のオプションを`-af`にしておくと、いちいち確認が出ずに強制的に上書きしてくれます。
 
 
 ### testの実行
@@ -120,6 +124,8 @@ $ sudo ./test
 を実行
 
 虹色にぎらぎら動いたらビルド成功です！
+
+(追記ここまで)
 
 --- 
 
@@ -134,14 +140,25 @@ $ cd illumi-packet
 
 ---
 (追記)
-### 必要パッケージなどのインストール
-とりあえずbuildを実行してみて、必要なものをインストール
-足りなければ
+
+現在ご覧のこのリポジトリは
 
 ```sh
-go mod download github.com/rpi-ws281x/rpi-ws281x-go
+$ git clone https://github.com/yuukami256/illumi-packet.git
+$ cd illumi-packet
 ```
-などを実行
+
+で取得できます。
+
+### 必要パッケージなどのインストール
+とりあえず `$ go build illumi-packet.go` を実行してみて、〜が足りませんみたいなお知らせが出た場合は
+
+```sh
+$ go mod download github.com/rpi-ws281x/rpi-ws281x-go
+```
+などを実行して必要なものをインストールしてください。
+
+(追記ここまで)
 
 --- 
 
@@ -177,9 +194,11 @@ $ go build illumi-packet.go
 うまくいかない場合はsudoをつけるとうまくいくこともあるようです。
 
 ```sh
-sudo go build illumi-packet.go
+$ sudo go build illumi-packet.go
 ```
 を実行して実行ファイルが完成します。
+
+(追記ここまで)
 
 ---
 
@@ -241,22 +260,6 @@ LEDの表示を消す．
 $ sudo ./illumi-packet -reset
 ```
 
-## LICENSE
+## LICENSE, CONTACT
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-
-<span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">麻生 航平</span> 作『<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">イルミパケット</span>』は<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">クリエイティブ・コモンズ 表示 4.0 国際 ライセンス</a>で提供されています。
-
-* 改変・再配布自由
-* クレジット表示必須
-
-自サイトで使用例を紹介させていただく場合があります。
-<br>クレジット表示・自サイトでの紹介を希望されない場合は、お問い合わせください。
-
-## CONTACT
-
-Twitter: [@souring001](https://twitter.com/souring001)
-
-
-ILLUMI PACKET
-<br />Copyright (c) 2019, Kohei Aso
+[本家様のREADME](https://github.com/souring001/illumi-packet/blob/master/README.md) をご参照ください。
