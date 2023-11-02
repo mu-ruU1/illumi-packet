@@ -40,7 +40,7 @@ const (
 	pin        = 18  // GPIO
 	series     = 6   // length of trail
 	count      = 144 // number of LEDs
-	brightness = 50  // max 255
+	brightness = 250  // max 255
 )
 
 var (
@@ -59,26 +59,26 @@ var (
 		// GRB color
 		0xFFFFFF, //0 White others
 		0x880000, //1 Green
-		0x00FF00, //2 Red Anomaly
+		0xff0000, //2 Red Anomaly
 		0x0000FF, //3 Blue TCP
-		0x0066cc, //4 Purple ARP
-		0x33FF99, //5 Pink ICMP
+		0x800080, //4 Purple ARP
+		0xff00ff, //5 Pink ICMP
 		0xFFFF00, //6 Yellow UDP
-		0x88FF00, //7 Orange IGMP
-		0xFF00FF, //8 Cyan DHCP
-		0xFF0000, //9 Lime DNS
+		0xffa500, //7 Orange IGMP
+		0x00ffff, //8 Cyan DHCP
+		0x00ff00, //9 Lime DNS
 		0x888888, //10 GRAY
 	}
 	layerMap = map[string]layerMeta{
-		"ARP":     layerMeta{color: colors[7], show: true},
-		"ICMP":    layerMeta{color: colors[5], show: true},
-		"TCP":     layerMeta{color: colors[3], show: true},
-		"UDP":     layerMeta{color: colors[6], show: true},
-		"IGMP":    layerMeta{color: colors[4], show: true},
-		"DNS":     layerMeta{color: colors[9], show: true},
-		"DHCP":    layerMeta{color: colors[8], show: true},
-		"Anomaly": layerMeta{color: colors[2], show: true},
 		"Others":  layerMeta{color: colors[0], show: true},
+		"Anomaly": layerMeta{color: colors[2], show: true},
+		"TCP":     layerMeta{color: colors[3], show: true},
+		"IGMP":    layerMeta{color: colors[4], show: true},
+		"ICMP":    layerMeta{color: colors[5], show: true},
+		"UDP":     layerMeta{color: colors[6], show: true},
+		"ARP":     layerMeta{color: colors[7], show: true},
+		"DHCP":    layerMeta{color: colors[8], show: true},
+		"DNS":     layerMeta{color: colors[9], show: true},
 	}
 )
 
